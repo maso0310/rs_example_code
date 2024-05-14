@@ -1,7 +1,7 @@
 from osgeo import gdal
 
 # 打開 TIFF 文件
-tif_input_path = './01_Image/UAV/tif/2022-10-10_BG_RGB_20m_Ortho.tif'
+tif_input_path = '01_Image\UAV\tif\2022-10-10_BG_RGB_20m_Ortho.tif'
 dataset = gdal.Open(tif_input_path)
 
 # 讀取柵格數據

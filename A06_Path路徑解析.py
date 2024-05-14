@@ -1,7 +1,7 @@
 import glob
 from pathlib import Path
 # 獲得目標路徑
-tif_image_path = glob.glob('./*/*/*/*.tif')[0]
+tif_image_path = glob.glob('./*/*/*/*.tif*')[0]
 # 上層資料夾
 parent_dir = Path(tif_image_path).parent
 # 檔案名稱

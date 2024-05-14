@@ -2,7 +2,7 @@ import glob
 from pathlib import Path 
 
 # 獲得目標路徑
-tif_image_path = glob.glob('./*/*/*/*.tif')[0]
+tif_image_path = glob.glob('./*/*/*/*.shp')[0]
 
 # 檔案名稱
 file_name = Path(tif_image_path).stem

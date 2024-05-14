@@ -1,7 +1,7 @@
 import cv2 as cv
 import glob
 from pathlib import Path
-image_path = glob.glob('./01_Image/Lenna.png')[0]
+image_path = glob.glob('./01_Image/L*.png')[0]
 image_name = Path(image_path).stem
 image = cv.imread(image_path)
 # 將B、G、R圖層分離出來
