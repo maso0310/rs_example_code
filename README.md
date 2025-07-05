@@ -15,8 +15,8 @@ pip install -r requirements.txt
 pip install GDAL-3.3.0-cp39-cp39-win_amd64.whl
 ```
 
-## 遙測影像分析範例程式碼
-[範例檔案下載連結](https://reurl.cc/r9rrQN)
+## 範例用檔案 (Example Files)
+[下載連結](https://reurl.cc/r9rrQN)
 
 ## 目錄結構 (Directory Structure)
 
