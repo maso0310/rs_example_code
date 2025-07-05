@@ -1,6 +1,7 @@
 __pycache__
+py39
+.vscode
 /01_Image
 /02_Data
 /03_Result
 /04_Model_saved
-py39
