@@ -1,6 +1,3 @@
-## 遙測影像分析範例程式碼
-[範例檔案下載連結](https://reurl.cc/r9rrQN)
-
 # 遙測與機器學習範例程式碼 (Remote Sensing & Machine Learning Examples)
 
 本專案包含一系列的 Python 範例程式碼，旨在展示如何應用於遙測 (Remote Sensing) 影像分析與農業資料科學。內容涵蓋了從基礎的資料讀取、影像處理，到進階的機器學習模型訓練與應用。
@@ -17,6 +14,9 @@ pip install -r requirements.txt
 ```bash
 pip install GDAL-3.3.0-cp39-cp39-win_amd64.whl
 ```
+
+## 遙測影像分析範例程式碼
+[範例檔案下載連結](https://reurl.cc/r9rrQN)
 
 ## 目錄結構 (Directory Structure)
 
