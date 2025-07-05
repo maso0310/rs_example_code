@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Leaflet's CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+        integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+        crossorigin="" />
+    <!-- 一定要在Leaflet's CSS之後再加入 -->
+    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+        integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+        crossorigin=""></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script>
+        //CWB-C5CAB02E-9421-460F-9F2B-BE63261A73D2
+
+        (function ($) {
+            $(document).ready(function () {
+                $('#mapid').height(window.innerHeight);
+                var myMap = L.map('mapid');
+
+                L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg', {
+                    minZoom: 1,
+                    maxZoom: 16,
+                }).addTo(myMap);
+                L.tileLayer.wms("http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi", {
+                    layers: 'nexrad-n0r-900913',
+                    format: 'image/png',
+                    transparent: true,
+                }).addTo(myMap);
+                myMap.fitBounds([
+                    [22, 120],
+                    [25, 122]
+                ]);
+                /*
+                L.latLng(24, 121);
+                L.latLng([24, 121]);
+                L.latLng({
+                    lat: 24,
+                    lng: 121
+                })
+                L.latLng({
+                    lng: 121,
+                    lat: 24
+                })
+                L.latLngBounds([
+                    [22, 120],
+                    [25, 122]
+                ])
+
+                var point_1 = L.point(200, 300);
+                var point_2 = L.point(-200, -300);
+                var point_3 = L.point(100, 500);
+                var point_4 = L.point(-100, -500);
+                setTimeout(function() {
+                    myMap.panBy(point_1)
+                }, 1000)
+                setTimeout(function() {
+                    myMap.panBy(point_2)
+                }, 2000)
+                setTimeout(function() {
+                    myMap.panBy(point_3)
+                }, 3000)
+                setTimeout(function() {
+                    myMap.panBy(point_4)
+                }, 4000)
+                var p1 = L.point(0, 0),
+                    p2 = L.point(2000, 2000),
+                    bounds = L.bounds(p1, p2);
+
+                var myIcon = L.icon({
+                    iconUrl: 'Img/leaf-red.png',
+                    iconSize: [38, 95],
+                    iconAnchor: [22, 94],
+                    popupAnchor: [-3, -76],
+                    shadowUrl: 'Img/leaf-shadow.png',
+                    shadowSize: [50, 50],
+                    shadowAnchor: [4, 49]
+                });
+
+                L.marker([24, 121], {
+                    icon: myIcon
+                }).addTo(myMap);
+                */
+
+                var myIcon = L.divIcon({
+                    className: 'my-div-icon'
+                });
+                // you can set .my-div-icon styles in CSS
+
+                L.marker([24, 121], {
+                    icon: myIcon
+                }).addTo(myMap);
+            });
+        })($)
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .my-div-icon {
+            width: 30px;
+            height: 50px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 想要整個頁面都是地圖，所以我在這邊用 style="width: 100%;"填滿寬 -->
+    <div id="mapid" style="width: 100%;"></div>
+</body>
+
+</html>

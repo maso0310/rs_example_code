@@ -1,0 +1,13 @@
+pandas
+openpyxl
+setuptools
+opencv-python
+scikit-image
+matplotlib
+adapt==0.4.2
+tensorflow==2.10.0
+keras==2.10.0
+labelImg
+labelme
+numpy==1.23.5
+scikit-learn==1.1.3

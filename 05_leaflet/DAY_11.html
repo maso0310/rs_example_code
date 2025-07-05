@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Leaflet's CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+        integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+        crossorigin="" />
+    <!-- 一定要在Leaflet's CSS之後再加入 -->
+    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+        integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+        crossorigin=""></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script>
+        //CWB-C5CAB02E-9421-460F-9F2B-BE63261A73D2
+
+        (function ($) {
+            $(document).ready(function () {
+                $('#mapid').height(window.innerHeight);
+                var myMap = L.map('mapid');
+
+                L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg', {
+                    minZoom: 1,
+                    maxZoom: 16,
+                }).addTo(myMap);
+                L.tileLayer.wms("http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi", {
+                    layers: 'nexrad-n0r-900913',
+                    format: 'image/png',
+                    transparent: true,
+                }).addTo(myMap);
+                myMap.fitBounds([
+                    [22, 120],
+                    [25, 122]
+                ]);
+                L.control.zoom({
+                    position: 'topright',
+                    zoomInText: '↑',
+                    zoomInTitle: 'Zoom In!!',
+                    zoomOutText: '↓',
+                    zoomOutTitle: 'Zoom Out!!'
+                }).addTo(myMap);
+                L.control.attribution({
+                    position: 'bottomright',
+                    prefix: '<h3>Maso</h3>'
+                }).addTo(myMap);
+                var map_1 = L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                    maxZoom: 18,
+                })
+
+                var map_2 = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 18,
+                })
+                //道路圖層
+                var polyline = L.polyline([
+                    [
+                        [22, 120],
+                        [25, 120]
+                    ],
+                    [
+                        [22, 121],
+                        [25, 121]
+                    ],
+                    [
+                        [22, 122],
+                        [25, 122]
+                    ]
+                ])
+
+                //校地範圍
+                polygon = L.polygon([
+                    [
+                        [22, 120],
+                        [23.5, 121],
+                        [25, 120],
+                        [25, 122],
+                        [23.5, 121],
+                        [22, 122]
+                    ],
+                    [
+                        [25, 121],
+                        [24.25, 120.5],
+                        [24.25, 121.5]
+                    ],
+                    [
+                        [22.75, 120.5],
+                        [22, 121],
+                        [22.75, 121.5]
+                    ]
+                ])
+                L.control.layers({
+                    "map_1": map_1,
+                    "map_2": map_2
+                }, {
+                    "polyline": polyline,
+                    "polygon": polygon
+                }).addTo(myMap);
+
+                L.control.scale({
+                    maxWidth: 200,
+                    metric: true,
+                    imperial: false,
+                    updateWhenIdle: true,
+                    position: 'bottomleft'
+                }).addTo(myMap);
+
+            });
+        })($)
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .my-div-icon {
+            width: 30px;
+            height: 50px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 想要整個頁面都是地圖，所以我在這邊用 style="width: 100%;"填滿寬 -->
+    <div id="mapid" style="width: 100%;"></div>
+</body>
+
+</html>

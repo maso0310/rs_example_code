@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Leaflet's CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+        integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+        crossorigin="" />
+    <!-- 一定要在Leaflet's CSS之後再加入 -->
+    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+        integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+        crossorigin=""></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script>
+        //CWB-C5CAB02E-9421-460F-9F2B-BE63261A73D2
+
+        (function ($) {
+            $(document).ready(function () {
+                $('#mapid').height(window.innerHeight);
+                var myMap = L.map('mapid');
+
+                L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg', {
+                    minZoom: 1,
+                    maxZoom: 16,
+                }).addTo(myMap);
+                L.tileLayer.wms("http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi", {
+                    layers: 'nexrad-n0r-900913',
+                    format: 'image/png',
+                    transparent: true,
+                }).addTo(myMap);
+                myMap.fitBounds([
+                    [22, 120],
+                    [25, 122]
+                ]);
+                /*
+                var group = L.layerGroup()
+                var circle = L.circle([25, 121], {
+                    radius: 20000
+                })
+                var path = {
+                    color: "red",
+                    fillColor: "green",
+                    stroke: true,
+                    opacity: 0.8,
+                }
+                var rectangle = L.rectangle(
+                    [
+                        [23, 120.5],
+                        [24, 121.5]
+                    ], path);
+                var marker = L.marker([24, 122]).bindPopup(
+                    "<h2>Popup</h2></b><p>Marker + Popup</p>"
+                );
+                group.addLayer(circle)
+                group.addLayer(rectangle)
+                group.addLayer(marker)
+                group.addTo(myMap)
+
+                var group = L.featureGroup()
+                group.addLayer(circle)
+                group.addLayer(rectangle)
+                group.addLayer(marker)
+                group.bindPopup("I'm here")
+                group.on('click', function() {
+                    alert('click!')
+                })
+                group.addTo(myMap)
+                */
+
+                data = {
+                    "type": "FeatureCollection",
+                    "features": [{
+                        "type": "Feature",
+                        "properties": {},
+                        "geometry": {
+                            "type": "Polygon",
+                            "coordinates": [
+                                [
+                                    [
+                                        121.75598144531251,
+                                        24.492147541216028
+                                    ],
+                                    [
+                                        121.651611328125,
+                                        24.77177232822881
+                                    ],
+                                    [
+                                        121.44287109374999,
+                                        24.886436490787712
+                                    ],
+                                    [
+                                        121.27258300781251,
+                                        24.652009767778697
+                                    ],
+                                    [
+                                        120.9979248046875,
+                                        24.23694700391751
+                                    ],
+                                    [
+                                        121.0418701171875,
+                                        24.186847428521244
+                                    ],
+                                    [
+                                        121.28906250000001,
+                                        24.14174098050432
+                                    ],
+                                    [
+                                        121.04736328125,
+                                        23.885837699862005
+                                    ],
+                                    [
+                                        120.75622558593749,
+                                        23.433009077420344
+                                    ],
+                                    [
+                                        120.77270507812499,
+                                        22.411028521558706
+                                    ],
+                                    [
+                                        120.904541015625,
+                                        22.49733243288233
+                                    ],
+                                    [
+                                        121.0089111328125,
+                                        22.826820400544044
+                                    ],
+                                    [
+                                        121.01989746093749,
+                                        23.008964269673108
+                                    ],
+                                    [
+                                        121.1572265625,
+                                        23.2060096376488
+                                    ],
+                                    [
+                                        121.1572265625,
+                                        23.266580706342193
+                                    ],
+                                    [
+                                        121.234130859375,
+                                        23.276673210348186
+                                    ],
+                                    [
+                                        121.23962402343749,
+                                        23.407806080861413
+                                    ],
+                                    [
+                                        121.212158203125,
+                                        23.508589226762282
+                                    ],
+                                    [
+                                        121.2286376953125,
+                                        23.609295317664763
+                                    ],
+                                    [
+                                        121.36596679687499,
+                                        23.71998271844965
+                                    ],
+                                    [
+                                        121.42639160156249,
+                                        23.845649887659352
+                                    ],
+                                    [
+                                        121.4813232421875,
+                                        23.905926927314724
+                                    ],
+                                    [
+                                        121.50329589843749,
+                                        24.041447460138738
+                                    ],
+                                    [
+                                        121.5472412109375,
+                                        24.12168855843423
+                                    ],
+                                    [
+                                        121.56921386718751,
+                                        24.251973033707195
+                                    ],
+                                    [
+                                        121.50329589843749,
+                                        24.282019767227187
+                                    ],
+                                    [
+                                        121.46484375,
+                                        24.382124181118236
+                                    ],
+                                    [
+                                        121.47033691406249,
+                                        24.57210414801684
+                                    ],
+                                    [
+                                        121.58569335937501,
+                                        24.681961205014595
+                                    ],
+                                    [
+                                        121.67358398437499,
+                                        24.53712939907993
+                                    ],
+                                    [
+                                        121.75598144531251,
+                                        24.492147541216028
+                                    ]
+                                ]
+                            ]
+                        }
+                    }]
+                }
+
+                Tile_Creator = L.GridLayer.extend({
+                    createTile: function (coords) {
+                        var tile = document.createElement('div');
+                        tile.innerHTML = [coords.x, coords.y, coords.z].join(', ');
+                        tile.style.outline = '1px solid #333';
+                        return tile;
+                    }
+                });
+
+                Grid_Coords = function () {
+                    return new Tile_Creator();
+                };
+
+                myMap.addLayer(Grid_Coords());
+            });
+        })($)
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 想要整個頁面都是地圖，所以我在這邊用 style="width: 100%;"填滿寬 -->
+    <div id="mapid" style="width: 100%;"></div>
+</body>
+
+</html>

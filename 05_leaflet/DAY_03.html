@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Leaflet's CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+        integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+        crossorigin="" />
+    <!-- 一定要在Leaflet's CSS之後再加入 -->
+    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+        integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+        crossorigin=""></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script>
+        var myMap;
+        (function ($) {
+            $(document).ready(function () {
+                $('#mapid').height(window.innerHeight);
+                var myMap = L.map('mapid');
+                L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                    maxZoom: 18,
+                    attribution: 'Map data: © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: © <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+                }).addTo(myMap);
+                myMap.fitBounds([
+                    [22, 120],
+                    [25, 122]
+                ])
+
+                myMap.panTo([24, 121]);
+                //道路圖層
+                road = L.polyline([
+                    [22.73264868398435, 120.28450012207031],
+                    [22.72837380478485, 120.28450012207031],
+                    [22.723307108275556, 120.28604507446288]
+                ])
+
+                //校地範圍
+                school = L.polygon([
+                    [
+                        [22.72979877936457, 120.27806282043456],
+                        [22.732134122265894, 120.28162479400635],
+                        [22.73252993914425, 120.29046535491942],
+                        [22.73684426881351, 120.29025077819824],
+                        [22.737715034437908, 120.28591632843016],
+                        [22.735617271475324, 120.28505802154541],
+                        [22.73767545430257, 120.2777624130249],
+                        [22.733717382905326, 120.27643203735352],
+                        [22.733638220308723, 120.27523040771484],
+                        [22.72979877936457, 120.27806282043456]
+                    ],
+                    [
+                        [22.731461230943435, 120.27870655059813],
+                        [22.732292449154702, 120.28007984161376],
+                        [22.733163243766654, 120.27900695800781],
+                        [22.73264868398435, 120.27767658233643],
+                        [22.731461230943435, 120.27870655059813]
+                    ]
+                ])
+                mapbox = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+                    maxZoom: 18,
+                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+                        '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+                        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    id: 'mapbox.streets'
+                })
+
+                topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 18,
+                    crossOrigin: true,
+                    attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+                })
+
+                myMap.addControl(L.control.layers({
+                    "mapbox": mapbox,
+                    "topo map": topo
+                }, {
+                    "road": road,
+                    "nuk": school
+                }, {
+                    'position': 'topleft'
+                }))
+                marker = L.marker([24, 121])
+                myMap.addLayer(marker)
+                myMap.openPopup("Popup", [24, 121])
+            });
+        })($)
+    </script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 想要整個頁面都是地圖，所以我在這邊用 style="width: 100%;"填滿寬 -->
+    <div id="mapid" style="width: 100%;"></div>
+</body>
+
+</html>
