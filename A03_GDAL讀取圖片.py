@@ -35,5 +35,5 @@ for i in range(bands):
     min, max, mean, std = band.ComputeStatistics(0) # 0是精準計算，1是允許使用近似方法
     print(f"波段 {i+1} - 最小值: {min}, 最大值: {max}, 平均: {mean}, 標準差: {std}")
 
-# 关闭数据集
+# 關閉數據集
 dataset = None

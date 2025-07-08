@@ -6,6 +6,15 @@
 
 建議使用 Python 3.9 環境，並請透過 pip 安裝所需的套件：
 
+
+🪟 Windows 安裝流程
+
+建立與啟動虛擬環境
+```bash
+py -3.9 -m venv venv
+.\venv\Script\activate
+```
+
 ```bash
 pip install -r requirements.txt
 ```
@@ -14,6 +23,61 @@ pip install -r requirements.txt
 ```bash
 pip install GDAL-3.3.0-cp39-cp39-win_amd64.whl
 ```
+
+---
+
+### 🍎 Mac 安裝流程
+
+建議使用 [`pyenv`](https://github.com/pyenv/pyenv) 安裝與管理 Python 3.9：
+
+```bash
+# 安裝 pyenv
+brew install pyenv
+
+# 安裝 Python 3.9（也可用 pyenv install --list 查詢可用版本）
+pyenv install 3.9.13
+pyenv local 3.9.13  # 設定為當前資料夾使用
+
+# 建立虛擬環境（選用）
+python -m venv venv
+source venv/bin/activate
+```
+
+安裝套件：
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+#### ❗ 安裝 GDAL for Mac（必要步驟）
+
+使用 Homebrew 安裝：
+
+```bash
+brew install gdal
+```
+
+加入以下環境變數（建議寫入 `~/.zshrc` 或 `~/.bash_profile`）：
+
+```bash
+export CPLUS_INCLUDE_PATH=/opt/homebrew/opt/gdal/include
+export C_INCLUDE_PATH=/opt/homebrew/opt/gdal/include
+export LDFLAGS="-L/opt/homebrew/opt/gdal/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/gdal/include"
+export PATH="/opt/homebrew/opt/gdal/bin:$PATH"
+```
+
+套用環境變數後，使用下列指令安裝 Python 套件：
+
+```bash
+export GDAL_VERSION=$(gdal-config --version)
+pip install GDAL==$GDAL_VERSION
+```
+
+---
+
 
 ## 範例用檔案 (Example Files)
 [下載連結](https://reurl.cc/r9rrQN)
@@ -87,6 +151,28 @@ python A02_OpenCV讀取圖片.py
 部分腳本依賴於前面腳本的產出，建議可以依序研究。
 `C*.py` 檔案為被其他腳本引用的模組，不需單獨執行。
 
+
+
+## 常見問題 FAQ
+
+### ❓執行影像相關腳本後沒畫面？
+
+若你使用的是 macOS 並開啟圖形介面相關程式（如 OpenCV），請確認你允許 Python 開啟視窗。如果有使用 VSCode，建議從終端機直接執行程式：
+
+```bash
+python A02_OpenCV讀取圖片.py
+```
+
+### ❓在 Mac 上執行 Python 出現找不到 `gdal` 模組？
+
+請確認你已執行：
+
+```bash
+brew install gdal
+export GDAL_VERSION=$(gdal-config --version)
+pip install GDAL==$GDAL_VERSION
+```
+
 <br><br>
 ====================================<br>
 如果喜歡這個教學內容<br>
@@ -97,3 +183,4 @@ python A02_OpenCV讀取圖片.py
 
 
 ====================================<br>
+
