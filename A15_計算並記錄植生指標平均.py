@@ -1,43 +1,46 @@
-import glob 
-from pathlib import Path
-from osgeo import gdal
-import numpy as np
-import os
-import csv
+import glob                        # 用來讀取符合條件的檔案清單
+from pathlib import Path           # 處理檔名與路徑
+from osgeo import gdal             # GDAL 用來讀取 GeoTIFF 影像資料
+import numpy as np                # 數值計算用的套件
+import os                         # 用來建立資料夾
+import csv                        # 寫入 CSV 檔案用
 
-# 建立資料夾
+# ✅ 建立輸出資料夾（若尚未存在）
 os.makedirs('./03_Result/CSV', exist_ok=True)
-# 建立CSV檔案
+
+# ✅ 建立 CSV 檔案並寫入表頭
 with open('./03_Result/CSV/Result.csv', 'w', encoding='utf-8', newline='') as f:
     writer = csv.writer(f)
-    writer.writerow(['image_name', 'ExG', 'NDI', 'GI', 'RGRI'])
+    writer.writerow(['image_name', 'ExG', 'NDI', 'GI', 'RGRI'])  # 表頭欄位名稱
 
-    # 由指定圖片路徑列表建立迴圈
+    # ✅ 讀取所有 Otsu 處理過的 GeoTIFF 影像檔
     for image_path in glob.glob('./03_Result/Otsu/*.tif'):
-        # 讀取圖片與名稱
+        # ✅ 使用 GDAL 讀取影像並正規化為 0~1（避免後續除以 255）
         image = gdal.Open(image_path).ReadAsArray() / 255.0
-        image_name = Path(image_path).stem
+        image_name = Path(image_path).stem  # 取得影像檔名（不含副檔名）
 
-        # 將每個波段分離
-        R = image[0,:,:]
-        G = image[1,:,:]
-        B = image[2,:,:]
+        # ✅ 將三個波段分別對應到 R、G、B
+        R = image[0, :, :]
+        G = image[1, :, :]
+        B = image[2, :, :]
 
-        # 建立一個遮罩，忽略掉全黑像素
+        # ✅ 建立遮罩，排除全黑像素（背景區域）
         valid_mask = (R > 0) & (G > 0) & (B > 0)
 
-        # 計算有效像素的植生指標
-        ExG = np.where(valid_mask, (2 * G) - R - B, np.nan)
-        NDI = np.where(valid_mask, (G - R) / (G + R + 1e-10), np.nan)
-        GI = np.where(valid_mask, G / (R + 1e-10), np.nan)
-        RGRI = np.where(valid_mask, R / (G + 1e-10), np.nan)
+        # ✅ 計算 4 種植生指標（排除背景，否則設為 NaN）
+        ExG = np.where(valid_mask, (2 * G) - R - B, np.nan)                     # Excess Green
+        NDI = np.where(valid_mask, (G - R) / (G + R + 1e-10), np.nan)          # Normalized Difference Index
+        GI = np.where(valid_mask, G / (R + 1e-10), np.nan)                     # Green Index
+        RGRI = np.where(valid_mask, R / (G + 1e-10), np.nan)                   # Red-Green Ratio Index
 
-        # 計算植生指標，並且忽略空值
+        # ✅ 分別計算每個指標的有效像素平均值（忽略 NaN）
         ExG_mean = np.nanmean(ExG)
         NDI_mean = np.nanmean(NDI)
         GI_mean = np.nanmean(GI)
         RGRI_mean = np.nanmean(RGRI)
 
-        # 將結果寫入CSV檔案中
+        # ✅ 將平均值結果寫入 CSV 檔案
         writer.writerow([image_name, ExG_mean, NDI_mean, GI_mean, RGRI_mean])
+
+# ✅ 輸出完成訊息
 print(f'資料寫入完畢 檔案位置： ./03_Result/CSV/Result.csv')
